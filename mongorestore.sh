@@ -1,0 +1,1 @@
+mongorestore -u admin -p apel --gzip --dir ./db_init

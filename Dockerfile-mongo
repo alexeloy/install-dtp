@@ -1,0 +1,4 @@
+FROM mongo:4.4.6
+
+COPY ./db_init ./db_init
+COPY mongorestore.sh /docker-entrypoint-initdb.d/mongorestore.sh

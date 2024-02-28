@@ -1,0 +1,74 @@
+version: '3.8'
+services:
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+      - 25676:25676
+    restart: always
+    networks:
+      - apel-network
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile-mongo
+    container_name: mongodb
+    env_file:
+      - ./env/docker/mongo/.env
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db_be_management
+    restart: always
+    networks:
+      - apel-network
+
+  svc-worker-send-panel:
+    container_name: svc-worker-send-panel
+    image: alexeloy/svc-worker-send-panel:1.2
+    ports:
+      - 3002:3333
+    depends_on:
+      - db
+      - rabbitmq
+    env_file:
+      - ./env/docker/svc-worker-send-panel/.env
+    restart: always
+    networks:
+      - apel-network
+
+  svc-worker-sync-data:
+    container_name: svc-worker-sync-data
+    image: alexeloy/svc-worker-sync-data:1.0
+    ports:
+      - 3001:3001
+    depends_on:
+      - db
+      - rabbitmq
+    env_file:
+      - ./env/docker/svc-worker-sync-data/.env
+    restart: always
+    networks:
+      - apel-network
+
+  be-management-dtp:
+    container_name: be-management-dtp
+    image: alexeloy/be-management-dtp:1.1
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - rabbitmq
+    env_file:
+      - ./env/.env
+    restart: always
+    networks:
+      - apel-network
+
+networks:
+  apel-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
