@@ -54,7 +54,7 @@ services:
 
   be-management-dtp:
     container_name: be-management-dtp
-    image: alexeloy/be-management-dtp:1.1
+    image: alexeloy/be-management-dtp:1.2
     ports:
       - 3000:3000
     depends_on:
