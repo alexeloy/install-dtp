@@ -26,7 +26,7 @@ services:
 
   svc-worker-send-panel:
     container_name: svc-worker-send-panel
-    image: alexeloy/svc-worker-send-panel:1.2
+    image: alexeloy/svc-worker-send-panel:1.3
     ports:
       - 3002:3333
     depends_on:
@@ -54,7 +54,7 @@ services:
 
   be-management-dtp:
     container_name: be-management-dtp
-    image: alexeloy/be-management-dtp:1.2
+    image: alexeloy/be-management-dtp:1.3
     ports:
       - 3000:3000
     depends_on:
