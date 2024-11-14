@@ -26,7 +26,7 @@ services:
 
   svc-worker-send-panel:
     container_name: svc-worker-send-panel
-    image: alexeloy/svc-worker-send-panel:1.3
+    image: alexeloy/svc-worker-send-panel:1.4
     ports:
       - 3002:3333
     depends_on:
